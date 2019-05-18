@@ -19,13 +19,19 @@
     <div id="blue"></div>
     <script>
         function reducer(state, action) {
+            console.log(state, action);
             if (state === undefined) {
                 return { color: 'yellow' }
             }
+            var newState;
+            if (action.type === 'CHANGE_COLOR') {
+                newState = Object.assign({}, state, { color: 'red' })
+            }
+            return newState;
         }
 
         var store = Redux.createStore(reducer);
-        console.log(store.getState());
+
 
         function red() {
             var state = store.getState();
@@ -36,9 +42,7 @@
             type="button" 
             value="fire" 
             onclick="
-                document.querySelector('#component_red').style.backgroundColor='red';
-                document.querySelector('#component_green').style.backgroundColor='red';
-                document.querySelector('#component_blue').style.backgroundColor='red';
+                store.dispatch({type: 'CHANGE_COLOR', color: 'red'});
             ">
     </div>
 `;
